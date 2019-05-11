@@ -7,7 +7,6 @@ const express = require('express')			// module used to create the web server
     , Io = require('socket.io')
     ;
 
-
 /* GLOBAL CONSTANTS */
 const app = express()						// Creating a variable: app, to receive and respond to client's requests
     , port = 8000							// Defining what port to use to talk to the client
