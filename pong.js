@@ -54,6 +54,21 @@ function startSocketServer() {
 
         socket.on('joined', function(data) {
             io.emit('joined', data);
+        });
+
+        socket.on('stop', function(data) {
+            data.speed = 0;
+            io.emit('update', data);
+        })
+
+        socket.on('up', function(data) {
+            data.speed = -1;
+            io.emit('update', data);
+        })
+
+        socket.on('down', function(data) {
+            data.speed = 1;
+            io.emit('update', data);
         })
 
     });
