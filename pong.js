@@ -16,7 +16,6 @@ const app = express()						// Creating a variable: app, to receive and respond t
 
 let players = [];
 
-
 /* MIDDLEWARE TO LOOK AT THE REQUEST BEFORE HANDLING IT */
 app.use(bodyParser.json({					// Limiting the amount of data the client can send to 50mb
     limit: '50mb'
@@ -52,6 +51,10 @@ function startSocketServer() {
         socket.on('disconnect', function () {
             players = players.filter(player => player.id !== socket.id);
         });
+
+        socket.on('joined', function(data) {
+            socket.emit('joined', data);
+        })
 
     });
 }
