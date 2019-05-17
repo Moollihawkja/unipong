@@ -53,7 +53,7 @@ function startSocketServer() {
         });
 
         socket.on('joined', function(data) {
-            socket.emit('joined', data);
+            io.emit('joined', data);
         })
 
     });
