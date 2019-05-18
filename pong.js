@@ -14,6 +14,13 @@ const app = express()						// Creating a variable: app, to receive and respond t
     , io = Io(server)
     ;
 
+const speed = 1;
+const leftPosition = 44;
+const rightPosition = 44;
+const paddleHeight = 12;
+const leftSpeed = 0;
+const rightSpeed = 0;
+
 let players = [];
 
 /* MIDDLEWARE TO LOOK AT THE REQUEST BEFORE HANDLING IT */
@@ -40,7 +47,14 @@ function startSocketServer() {
         }
 
         if (players.length === 2) {
-            io.emit('start', 'start game');
+            io.emit('start', {
+                speed,
+                leftPosition,
+                rightPosition,
+                paddleHeight,
+                leftSpeed,
+                rightSpeed
+            });
         }
 
         if (players.length === 1) {
@@ -51,25 +65,6 @@ function startSocketServer() {
         socket.on('disconnect', function () {
             players = players.filter(player => player.id !== socket.id);
         });
-
-        socket.on('joined', function(data) {
-            io.emit('joined', data);
-        });
-
-        socket.on('stop', function(data) {
-            data.speed = 0;
-            io.emit('update', data);
-        })
-
-        socket.on('up', function(data) {
-            data.speed = -1;
-            io.emit('update', data);
-        })
-
-        socket.on('down', function(data) {
-            data.speed = 1;
-            io.emit('update', data);
-        })
 
     });
 }
