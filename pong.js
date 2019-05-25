@@ -23,6 +23,7 @@ let rightSpeed = 0;
 let ballSpeed = 1;
 let ballSize = 3;
 let ballPosition = { x: 50, y: 50 };
+let score = { left: 0, right: 0 };
 
 let angle;
 let direction;
@@ -46,17 +47,16 @@ app.get('/', (req, res, next) => {			// Recieving a request from the client when
 
 function startSocketServer() {
     io.on('connection', function (socket) {
-        players.push(socket);
-        if (players.length > 2) {
-            socket.emit('goaway', 'go away');
-        }
 
-        if (players.length === 2) {
+        players.push(socket);
+
+        function initialize() {
             const π = Math.PI;
             direction = Math.random() <= 0.5 ? -1 : 1; //RANDOMLY CHOOSE A NUMBER THAT IS -1 or 1
             angle = (Math.random() - 0.5) * 2 * π / 3;  //RANDOMLY CHOOSE A NUMBER THAT IS BETWEEN -pi/4 and pi/4
             io.emit('start', {
                 speed,
+                score,
                 leftPosition,
                 rightPosition,
                 paddleHeight,
@@ -70,14 +70,22 @@ function startSocketServer() {
             });
         }
 
+        if (players.length > 2) {
+            socket.emit('goaway', 'go away');
+        }
+
+        if (players.length === 2) {
+            initialize();
+        }
+
         if (players.length === 1) {
             socket.emit('waiting', 'bring your friends');
         }
 
         // LETS DETERMINE WHEN THE USER DISCONNECTS
         socket.on('disconnect', function () {
+            score = { left: 0, right: 0 };
             players = players.filter(player => player.id !== socket.id);
-            console.log(players.length);
         });
 
         socket.on('leftPaddleUp', function () {
@@ -108,6 +116,16 @@ function startSocketServer() {
         socket.on('rightPaddleDown', function () {
             rightSpeed = speed;
             io.emit('rightPaddleDown', { rightSpeed });
+        });
+
+        socket.on('rightBallPass', function () {
+            score.left++;
+            initialize();
+        });
+
+        socket.on('leftBallPass', function () {
+            score.right++;
+            initialize()
         });
 
     });
