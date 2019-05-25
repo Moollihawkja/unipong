@@ -21,6 +21,7 @@ let paddleHeight = 12;
 let leftSpeed = 0;
 let rightSpeed = 0;
 let ballSpeed = 1;
+let ballSize = 3;
 let angle;
 let direction;
 let players = [];
@@ -61,7 +62,8 @@ function startSocketServer() {
                 rightSpeed,
                 angle,
                 direction,
-                ballSpeed
+                ballSpeed,
+                ballSize
             });
         }
 
@@ -72,6 +74,7 @@ function startSocketServer() {
         // LETS DETERMINE WHEN THE USER DISCONNECTS
         socket.on('disconnect', function () {
             players = players.filter(player => player.id !== socket.id);
+            console.log(players.length);
         });
 
         socket.on('leftPaddleUp', function () {
