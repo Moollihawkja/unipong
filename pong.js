@@ -22,6 +22,7 @@ let leftSpeed = 0;
 let rightSpeed = 0;
 let ballSpeed = 1;
 let ballSize = 3;
+let ballPosition = { x: 50, y: 50 };
 let angle;
 let direction;
 let players = [];
@@ -63,7 +64,8 @@ function startSocketServer() {
                 angle,
                 direction,
                 ballSpeed,
-                ballSize
+                ballSize,
+                ballPosition
             });
         }
 
