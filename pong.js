@@ -92,69 +92,82 @@ function startSocketServer() {
 
         // LETS DETERMINE WHEN THE USER DISCONNECTS
         socket.on('disconnect', function () {
+            console.log('disconnect');
             score = { left: 0, right: 0 };
             players = players.filter(player => player.id !== socket.id);
         });
 
         socket.on('leftPaddleUp', function () {
+            console.log('leftPaddleUp');
             leftSpeed = -1 * speed;
             io.emit('leftPaddleUp', { leftSpeed });
         });
 
         socket.on('leftPaddleStop', function () {
+            console.log('leftPaddleStop');
             leftSpeed = 0;
             io.emit('leftPaddleStop', { leftSpeed });
         });
 
         socket.on('leftPaddleDown', function () {
+            console.log('leftPaddleDown');
             leftSpeed = speed;
             io.emit('leftPaddleDown', { leftSpeed });
         });
 
         socket.on('rightPaddleUp', function () {
+            console.log('rightPaddleUp');
             rightSpeed = -1 * speed;
             io.emit('rightPaddleUp', { rightSpeed });
         });
 
         socket.on('rightPaddleStop', function () {
+            console.log('rightPaddleStop');
             rightSpeed = 0;
             io.emit('rightPaddleStop', { rightSpeed });
         });
 
         socket.on('rightPaddleDown', function () {
+            console.log('rightPaddleDown');
             rightSpeed = speed;
             io.emit('rightPaddleDown', { rightSpeed });
         });
 
         socket.on('rightBallPass', function () {
+            console.log('rightBallPass');
             score.left++;
             initialize();
         });
 
         socket.on('leftBallPass', function () {
+            console.log('leftBallPass');
             score.right++;
             initialize()
         });
 
         socket.on('rightBallHit', function () {
+            console.log('rightBallHit');
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += rightSpeed;
             io.emit('ballHitPaddle', { ballSpeed });
         });
 
         socket.on('leftBallHit', function () {
+            console.log('leftBallHit');
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += leftSpeed;
             io.emit('ballHitPaddle', { ballSpeed });
         });
 
         socket.on('hitTop', function () {
+            console.log('hitTop');
             ballSpeed.y *= -1;
             ballPosition.y = 0;
             io.emit('ballHitTop', { ballSpeed, ballPosition });
         });
 
         socket.on('hitBottom', function () {
+            console.log('hitBottom');
             ballSpeed.y *= -1;
             ballPosition.y = 100 - ballSize;
             io.emit('ballHitBottom', { ballSpeed, ballPosition });
