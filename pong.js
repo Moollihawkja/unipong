@@ -136,6 +136,18 @@ function startSocketServer() {
             initialize()
         });
 
+        socket.on('rightBallHit', function () {
+            ballSpeed.x = -1 * ballSpeed.x;
+            ballSpeed.y += rightSpeed;
+            io.emit('update', ballSpeed);
+        });
+
+        socket.on('leftBallHit', function () {
+            ballSpeed.x = -1 * ballSpeed.x;
+            ballSpeed.y += leftSpeed;
+            io.emit('update', ballSpeed);
+        });
+
     });
 }
 
