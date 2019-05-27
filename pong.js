@@ -57,7 +57,7 @@ function startSocketServer() {
 
         players.push(socket);
 
-        function reset() {
+        function reset(resetScore) {
             speed = 1;
             leftPosition = 44;
             rightPosition = 44;
@@ -69,7 +69,7 @@ function startSocketServer() {
             rightSide = 3;
             leftSide = 3;
 
-            score = { left: 0, right: 0 };
+            if (resetScore) score = { left: 0, right: 0 };
 
             angle;
             direction;
@@ -114,7 +114,7 @@ function startSocketServer() {
         }
 
         if (players.length === 2) {
-            reset();
+            reset(true);
             players[0].emit('side', 'left');
             players[1].emit('side', 'right');
             setTimeout(() => {
@@ -124,7 +124,7 @@ function startSocketServer() {
         }
 
         if (players.length === 1) {
-            reset();
+            reset(true);
             socket.emit('waiting', 'bring your friends');
         }
 
@@ -174,12 +174,14 @@ function startSocketServer() {
         socket.on('rightBallPass', function () {
             console.log('rightBallPass');
             score.left++;
+            reset(false);
             initialize();
         });
 
         socket.on('leftBallPass', function () {
             console.log('leftBallPass');
             score.right++;
+            reset(false);
             initialize()
         });
 
