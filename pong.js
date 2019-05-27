@@ -139,13 +139,13 @@ function startSocketServer() {
         socket.on('rightBallHit', function () {
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += rightSpeed;
-            io.emit('ballHitPaddle', ballSpeed);
+            io.emit('ballHitPaddle', { ballSpeed });
         });
 
         socket.on('leftBallHit', function () {
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += leftSpeed;
-            io.emit('ballHitPaddle', ballSpeed);
+            io.emit('ballHitPaddle', { ballSpeed });
         });
 
     });
