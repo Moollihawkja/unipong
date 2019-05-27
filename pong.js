@@ -24,13 +24,16 @@ let rightWidth = 2;
 let leftWidth = 2;
 let rightSide = 3;
 let leftSide = 3;
-let ballSpeed = 1;
-let ballSize = 3;
-let ballPosition = { x: 50, y: 50 };
+
 let score = { left: 0, right: 0 };
 
 let angle;
 let direction;
+let speedOfBall = 1;
+let ballSize = 3;
+let ballSpeed = { x: 0, y: 0 }
+let ballPosition = { x: 50, y: 50 };
+
 let players = [];
 
 /* MIDDLEWARE TO LOOK AT THE REQUEST BEFORE HANDLING IT */
@@ -58,6 +61,12 @@ function startSocketServer() {
             const π = Math.PI;
             direction = Math.random() <= 0.5 ? -1 : 1; //RANDOMLY CHOOSE A NUMBER THAT IS -1 or 1
             angle = (Math.random() - 0.5) * 2 * π / 3;  //RANDOMLY CHOOSE A NUMBER THAT IS BETWEEN -pi/4 and pi/4
+
+            ballSpeed = {
+                x: direction * speedOfBall * Math.cos(angle)
+                , y: speedOfBall * Math.sin(angle)
+            }
+
             io.emit('start', {
                 speed,
                 score,
