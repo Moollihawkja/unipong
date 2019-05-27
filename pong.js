@@ -200,14 +200,14 @@ function startSocketServer() {
         socket.on('hitTop', function () {
             console.log('hitTop');
             ballSpeed.y = Math.abs(ballSpeed.y);
-            ballPosition.y = 1;
+            ballPosition.y = ballSize;
             io.emit('ballHitTop', { ballSpeed, ballPosition });
         });
 
         socket.on('hitBottom', function () {
             console.log('hitBottom');
             ballSpeed.y = -1 * Math.abs(ballSpeed.y);
-            ballPosition.y = 99;
+            ballPosition.y = 100 - ballSize;
             io.emit('ballHitBottom', { ballSpeed, ballPosition });
         });
 
