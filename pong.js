@@ -115,6 +115,8 @@ function startSocketServer() {
 
         if (players.length === 2) {
             reset();
+            players[0].emit('side', 'left');
+            players[1].emit('side', 'right');
             initialize();
         }
 
