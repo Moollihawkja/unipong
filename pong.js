@@ -57,6 +57,28 @@ function startSocketServer() {
 
         players.push(socket);
 
+        function reset() {
+            speed = 1;
+            leftPosition = 44;
+            rightPosition = 44;
+            paddleHeight = 12;
+            leftSpeed = 0;
+            rightSpeed = 0;
+            rightWidth = 2;
+            leftWidth = 2;
+            rightSide = 3;
+            leftSide = 3;
+
+            score = { left: 0, right: 0 };
+
+            angle;
+            direction;
+            speedOfBall = 1;
+            ballSize = 3;
+            ballSpeed = { x: 0, y: 0 }
+            ballPosition = { x: 50, y: 50 };
+        }
+
         function initialize() {
             const π = Math.PI;
             direction = Math.random() <= 0.5 ? -1 : 1; //RANDOMLY CHOOSE A NUMBER THAT IS -1 or 1
@@ -92,10 +114,12 @@ function startSocketServer() {
         }
 
         if (players.length === 2) {
+            reset();
             initialize();
         }
 
         if (players.length === 1) {
+            reset();
             socket.emit('waiting', 'bring your friends');
         }
 
