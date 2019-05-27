@@ -189,14 +189,15 @@ function startSocketServer() {
             console.log('rightBallHit');
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += rightSpeed;
-            io.emit('ballHitPaddle', { ballSpeed });
+            ballPosition.x = 100 - rightSide - rightWidth;
+            io.emit('ballHitPaddle', { ballSpeed, ballPosition });
         });
 
         socket.on('leftBallHit', function () {
             console.log('leftBallHit');
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += leftSpeed;
-            io.emit('ballHitPaddle', { ballSpeed });
+            io.emit('ballHitPaddle', { ballSpeed, ballPosition });
         });
 
         socket.on('hitTop', function () {
