@@ -148,6 +148,18 @@ function startSocketServer() {
             io.emit('ballHitPaddle', { ballSpeed });
         });
 
+        socket.on('hitTop', function () {
+            ballSpeed.y *= -1;
+            ballPosition.y = 0;
+            io.emit('ballHitTop', { ballSpeed, ballPosition });
+        });
+
+        socket.on('hitBottom', function () {
+            ballSpeed.y *= -1;
+            ballPosition.y = 100 - ballSize;
+            io.emit('ballHitBottom', { ballSpeed, ballPosition });
+        });
+
     });
 }
 
