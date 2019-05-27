@@ -199,14 +199,16 @@ function startSocketServer() {
 
         socket.on('hitTop', function () {
             console.log('hitTop');
-            ballSpeed.y *= -1;
-            io.emit('ballHitTop', { ballSpeed });
+            ballSpeed.y = Math.abs(ballSpeed.y);
+            ballPosition.y = 1;
+            io.emit('ballHitTop', { ballSpeed, ballPosition });
         });
 
         socket.on('hitBottom', function () {
             console.log('hitBottom');
-            ballSpeed.y *= -1;
-            io.emit('ballHitBottom', { ballSpeed });
+            ballSpeed.y = -1 * Math.abs(ballSpeed.y);
+            ballPosition.y = 99;
+            io.emit('ballHitBottom', { ballSpeed, ballPosition });
         });
 
     });
