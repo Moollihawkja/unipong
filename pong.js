@@ -117,7 +117,10 @@ function startSocketServer() {
             reset();
             players[0].emit('side', 'left');
             players[1].emit('side', 'right');
-            initialize();
+            setTimeout(() => {
+                initialize();
+            }, 500);
+
         }
 
         if (players.length === 1) {
@@ -197,13 +200,13 @@ function startSocketServer() {
         socket.on('hitTop', function () {
             console.log('hitTop');
             ballSpeed.y *= -1;
-            io.emit('ballHitTop', { ballSpeed, ballPosition });
+            io.emit('ballHitTop', { ballSpeed });
         });
 
         socket.on('hitBottom', function () {
             console.log('hitBottom');
             ballSpeed.y *= -1;
-            io.emit('ballHitBottom', { ballSpeed, ballPosition });
+            io.emit('ballHitBottom', { ballSpeed });
         });
 
     });
