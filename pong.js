@@ -189,7 +189,7 @@ function startSocketServer() {
             console.log('rightBallHit');
             ballSpeed.x = -1 * ballSpeed.x;
             ballSpeed.y += rightSpeed;
-            ballPosition.x = 100 - rightSide - rightWidth;
+            ballPosition.x = 100 - rightSide - rightWidth - ballSize;
             io.emit('ballHitPaddle', { ballSpeed, ballPosition });
         });
 
